@@ -30,10 +30,14 @@ def init_db():
         print("Database initialized successfully.")
 
 
-# Serve Frontend (index.html)
+# Serve Frontend (index.html and other static files)
 @app.route('/')
 def home():
     return send_from_directory('.', 'index.html')
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('.', filename)
 
 
 # Register User
