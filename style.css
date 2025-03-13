@@ -4,8 +4,9 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Style for the terminal/console output - with stronger and more specific selectors */
+/* High-specificity console text styling */
 .terminal, 
+.replit-ui-theme-root .terminal,
 .replit-ui-theme-root .cm-content,
 .replit-ui-theme-root .jsx-996290604,
 .replit-ui-theme-root pre,
@@ -17,40 +18,59 @@ body {
 .replit-ui-theme-root .jsx-437788642,
 div[class*="Output"],
 div[class*="Terminal"],
-div[class*="Console"] {
+div[class*="Console"],
+#console,
+.console,
+.console-output,
+[data-cy="console-output"] {
   color: #ffffff !important; /* Bright white text */
   background-color: #1e1e1e !important; /* Dark background */
-  font-family: monospace !important;
-  font-weight: 500 !important;
-}
-
-/* Ensure console text is visible */
-.terminal-output,
-.terminal-output span,
-.terminal-output div,
-.terminal-line,
-pre.jsx-1452474582,
-.term,
-.jsx-3414412928,
-.replit-ui-theme-root .console-output,
-.replit-ui-theme-root .console {
-  color: #ffffff !important;
-  background-color: #1e1e1e !important;
   font-family: 'Courier New', monospace !important;
   font-size: 14px !important;
   line-height: 1.5 !important;
   letter-spacing: 0.5px !important;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.5) !important; /* Subtle text shadow for contrast */
+  font-weight: normal !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Target all children of console elements */
+.terminal *, 
+.console *,
+.console-output *,
+#console *,
+[data-cy="console-output"] *,
+.replit-ui-theme-root .console *,
+.replit-ui-theme-root .console-output * {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force display of text spans */
+.terminal span, 
+.console span,
+.console-output span,
+[data-cy="console-output"] span {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  display: inline !important;
 }
 
 /* Ensure links in console are visible */
 .terminal a, 
+.console a,
 .replit-ui-theme-root .cm-content a {
-  color: #007bff !important;
+  color: #3498db !important;
+  text-decoration: underline !important;
+  font-weight: bold !important;
 }
 
 /* Add high contrast for important terminal messages */
 .terminal .error,
-.terminal .warning,
+.console .error,
 div[class*="error"],
 div[class*="warning"] {
   color: #ff5555 !important;
@@ -59,6 +79,16 @@ div[class*="warning"] {
 
 /* Style success messages */
 .terminal .success,
+.console .success,
 div[class*="success"] {
   color: #50fa7b !important;
+  font-weight: bold !important;
+}
+
+/* Style for Flask logs */
+.terminal .flask,
+.console .flask,
+pre:contains("* Running on") {
+  color: #f1c40f !important; /* Yellow for Flask messages */
+  font-weight: bold !important;
 }
