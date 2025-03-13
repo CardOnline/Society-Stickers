@@ -30,8 +30,16 @@ div[class*="Console"] {
 .terminal-output div,
 .terminal-line,
 pre.jsx-1452474582,
-.term {
+.term,
+.jsx-3414412928,
+.replit-ui-theme-root .console-output,
+.replit-ui-theme-root .console {
   color: #ffffff !important;
+  background-color: #1e1e1e !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* Ensure links in console are visible */
