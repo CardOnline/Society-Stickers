@@ -1,0 +1,1 @@
+The user accidentally deleted the Replit project and wants it recreated with the same functionality. The project should automatically initialize the database, use `server.py` as the main entry point, and run properly on Replit.
