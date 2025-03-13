@@ -1,0 +1,21 @@
+
+/* Basic styling for the application */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Style for the terminal/console output */
+.terminal, 
+.replit-ui-theme-root .cm-content,
+.replit-ui-theme-root .jsx-996290604,
+.replit-ui-theme-root pre,
+.replit-ui-theme-root code {
+  color: #f0f0f0 !important;
+  background-color: #1e1e1e !important;
+}
+
+/* Ensure links in console are visible */
+.terminal a, 
+.replit-ui-theme-root .cm-content a {
+  color: #007bff !important;
+}
