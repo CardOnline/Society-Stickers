@@ -23,14 +23,14 @@ div[class*="Console"],
 .console,
 .console-output,
 [data-cy="console-output"] {
-  color: #ffffff !important; /* Bright white text */
+  color: lime !important; /* Changed to bright lime for contrast */
   background-color: #1e1e1e !important; /* Dark background */
   font-family: 'Courier New', monospace !important;
   font-size: 14px !important;
   line-height: 1.5 !important;
   letter-spacing: 0.5px !important;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.5) !important; /* Subtle text shadow for contrast */
-  font-weight: normal !important;
+  text-shadow: 0 0 1px rgba(0, 255, 0, 0.5) !important; /* Added green text shadow */
+  font-weight: bold !important; /* Made text bold for better visibility */
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
@@ -44,7 +44,7 @@ div[class*="Console"],
 [data-cy="console-output"] *,
 .replit-ui-theme-root .console *,
 .replit-ui-theme-root .console-output * {
-  color: #ffffff !important;
+  color: lime !important; /* Changed to bright lime for consistency */
   opacity: 1 !important;
   visibility: visible !important;
 }
@@ -54,7 +54,7 @@ div[class*="Console"],
 .console span,
 .console-output span,
 [data-cy="console-output"] span {
-  color: #ffffff !important;
+  color: lime !important; /* Changed to bright lime for consistency */
   opacity: 1 !important;
   display: inline !important;
 }
