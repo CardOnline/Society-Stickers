@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QR Stickers & Payments</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>QR Stickers & Payments</strong></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h2>Register Your Flat</h2>
+            <form id="registrationForm">
+                <input type="text" id="flatNumber" name="flatNumber" placeholder="Flat Number" required>
+                <input type="text" id="name" name="name" placeholder="Full Name" required>
+                <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                <button type="submit">Register</button>
+            </form>
+            <p id="registerResult"></p>
+        </section>
+        
+        <section>
+            <h2>Scan QR Code</h2>
+            <input type="text" id="qrCodeInput" placeholder="Enter QR Code">
+            <button onclick="scanQR()">Submit</button>
+            <p id="qrResult"></p>
+        </section>
+
+        <section>
+            <h2>Payment Reconciliation</h2>
+            <form id="paymentForm">
+                <input type="text" id="utrNumber" name="utrNumber" placeholder="Enter UPI/Check Transaction ID" required>
+                <button type="submit">Submit</button>
+            </form>
+            <p id="paymentResult"></p>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const flatNumber = document.getElementById('flatNumber').value;
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ flatNumber, name, mobile })
+            });
+            const result = await response.json();
+            document.getElementById('registerResult').innerText = result.message;
+        });
+
+        function scanQR() {
+            const qrCode = document.getElementById('qrCodeInput').value;
+            fetch('/scan_qr', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ qrCode })
+            }).then(response => response.json())
+              .then(data => document.getElementById('qrResult').innerText = data.message);
+        }
+
+        document.getElementById('paymentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const utrNumber = document.getElementById('utrNumber').value;
+            const response = await fetch('/submit_payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ utrNumber })
+            });
+            const result = await response.json();
+            document.getElementById('paymentResult').innerText = result.message;
+        });
+    </script>
+</body>
+</html>
