@@ -4,18 +4,53 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Style for the terminal/console output */
+/* Style for the terminal/console output - with stronger and more specific selectors */
 .terminal, 
 .replit-ui-theme-root .cm-content,
 .replit-ui-theme-root .jsx-996290604,
 .replit-ui-theme-root pre,
-.replit-ui-theme-root code {
-  color: #f0f0f0 !important;
-  background-color: #1e1e1e !important;
+.replit-ui-theme-root code,
+.jsx-3971054001,
+.jsx-4049302618,
+.jsx-3414412928,
+.replit-ui-theme-root .jsx-4229728152,
+.replit-ui-theme-root .jsx-437788642,
+div[class*="Output"],
+div[class*="Terminal"],
+div[class*="Console"] {
+  color: #ffffff !important; /* Bright white text */
+  background-color: #1e1e1e !important; /* Dark background */
+  font-family: monospace !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure console text is visible */
+.terminal-output,
+.terminal-output span,
+.terminal-output div,
+.terminal-line,
+pre.jsx-1452474582,
+.term {
+  color: #ffffff !important;
 }
 
 /* Ensure links in console are visible */
 .terminal a, 
 .replit-ui-theme-root .cm-content a {
   color: #007bff !important;
+}
+
+/* Add high contrast for important terminal messages */
+.terminal .error,
+.terminal .warning,
+div[class*="error"],
+div[class*="warning"] {
+  color: #ff5555 !important;
+  font-weight: bold !important;
+}
+
+/* Style success messages */
+.terminal .success,
+div[class*="success"] {
+  color: #50fa7b !important;
 }
