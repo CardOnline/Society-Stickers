@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <nav class="container-fluid">
         <ul>
@@ -36,15 +38,33 @@
         <section>
             <h2>Payment Reconciliation</h2>
             <form id="paymentForm">
-                <input type="text" id="utrNumber" name="utrNumber" placeholder="Enter UPI/Check Transaction ID" required>
+                <input type="text" id="utrNumber" name="utrNumber" placeholder="Enter UPI/Check Transaction ID"
+                    required>
                 <button type="submit">Submit</button>
             </form>
             <p id="paymentResult"></p>
         </section>
+
+        <section>
+            <h2>Paste Your Bank SMS to Extract UTR</h2>
+
+            <label>Sender Name (Bank Name):</label>
+            <input type="text" id="sender" placeholder="e.g., ICICIBank" required>
+
+            <label>Paste SMS Text:</label>
+            <textarea id="smsInput" rows="4" placeholder="Paste the SMS message here..."></textarea>
+
+            <button onclick="extractUTR()">Extract UTR</button>
+
+            <label>Extracted UTR:</label>
+            <input type="text" id="utrOutput" readonly>
+
+            <button onclick="submitUTR()">Submit UTR</button>
+        </section>
     </main>
 
     <script>
-        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+        document.getElementById('registrationForm').addEventListener('submit', async function (event) {
             event.preventDefault();
             const flatNumber = document.getElementById('flatNumber').value;
             const name = document.getElementById('name').value;
@@ -65,10 +85,10 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ qrCode })
             }).then(response => response.json())
-              .then(data => document.getElementById('qrResult').innerText = data.message);
+                .then(data => document.getElementById('qrResult').innerText = data.message);
         }
 
-        document.getElementById('paymentForm').addEventListener('submit', async function(event) {
+        document.getElementById('paymentForm').addEventListener('submit', async function (event) {
             event.preventDefault();
             const utrNumber = document.getElementById('utrNumber').value;
             const response = await fetch('/submit_payment', {
@@ -80,5 +100,36 @@
             document.getElementById('paymentResult').innerText = result.message;
         });
     </script>
+    <script>
+        function extractUTR() {
+            let smsText = document.getElementById("smsInput").value;
+
+            // Regex pattern to detect UTR number (adjust based on bank format)
+            let utrPattern = /\b\d{12,}\b/;
+            let match = smsText.match(utrPattern);
+
+            if (match) {
+                document.getElementById("utrOutput").value = match[0];
+            } else {
+                document.getElementById("utrOutput").value = "No UTR found!";
+            }
+        }
+
+        function submitUTR() {
+            let sender = document.getElementById("sender").value;
+            let smsText = document.getElementById("smsInput").value;
+            let utrNumber = document.getElementById("utrOutput").value;
+
+            fetch("/submit_sms", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender, sms_text: smsText, utr_number: utrNumber })
+            })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error("Error:", error));
+        }
+    </script>
 </body>
+
 </html>
